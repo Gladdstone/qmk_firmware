@@ -16,6 +16,10 @@
 
 #pragma once
 
+#define RGB_MATRIX_ENABLE
+#define RGB_MATRIX_INDICATORS
+#define RGB_TRIGGER_ON_KEYDOWN
+
 #ifdef RGB_MATRIX_ENABLE
 /* RGB Matrix driver configuration */
 #    define DRIVER_COUNT 2

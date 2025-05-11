@@ -8,6 +8,25 @@
 
 This is a keyboard firmware based on the [tmk\_keyboard firmware](https://github.com/tmk/tmk_keyboard) with some useful features for Atmel AVR and ARM controllers, and more specifically, the [OLKB product line](https://olkb.com), the [ErgoDox EZ](https://ergodox-ez.com) keyboard, and the [Clueboard product line](https://clueboard.co).
 
+Personal fork:
+
+## Build notes
+Clear out old builds, compile.
+```
+qmk clean
+qmk compile -kb keychron/k8_pro/ansi/rgb -km gladdstone
+```
+
+Install:
+Verify device
+```
+dfu-util -l
+```
+Flash firmware
+```
+dfu-util -a 0 --dfuse-address 0x08000000:leave -D keychron_k8_pro_ansi_rgb_gladdstone.bin
+```
+
 ## Documentation
 
 * [See the official documentation on docs.qmk.fm](https://docs.qmk.fm)

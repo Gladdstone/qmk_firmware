@@ -145,4 +145,58 @@ led_config_t g_led_config = {
         4,    4,    4,                      4,                      4,    4,    4,    4,    4,    4,    4
 	}
 };
+
+/**
+ * handles per-key/LED lighting effects in addition to the active animation. Called
+ * every time the RGB Matrix is refreshed.
+ *
+ * @param led_min led updated (min)
+ * @param led_max led updated (max)
+ * @return bool
+ */
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t layer = get_highest_layer(layer_state);
+
+    // if (layer == MAC_FN) {
+    //     rgb_matrix_set_color_all(RGB_GREEN);
+    // } else {
+    //     rgb_matrix_set_color_all(RGB_BLUE);
+    // }
+
+    // for (uint8_t i = led_min; i < led_max; ++i) {
+    //     if (g_led_config.key[i].row == 0) {  // F-row
+    //         rgb_matrix_set_color(i, RGB_RED);
+    //     } else {
+    //         rgb_matrix_set_color(i, RGB_GREEN);
+    //     }
+    // }
+
+    rgb_matrix_set_color_all(RGB_WHITE);
+
+    if (host_keyboard_led_state().caps_lock) {
+        rgb_matrix_set_color_all(0x8b, 0x00, 0x00);  // RGB dark red --- capslock color
+    }
+
+    return true;
+}
+
+/**
+ * Called whenever a key is pressed or released
+ */
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case KC_LSFT:
+            if(record -> event.pressed) {
+                rgb_matrix_set_color_all(0, 0, 255); // Flash blue when left shift is pressed
+            }
+            break;
+        case KC_1:
+            if(record -> event.pressed) {
+                rgb_matrix_set_color_all(0, 255, 0);
+            }
+        default:
+            break;
+    }
+    return true;
+}
 #endif

@@ -14,7 +14,8 @@
         "extrakey": true,
         "nkro": true,
         "dip_switch": true,
-        "raw": true
+        "raw": true,
+        "rgb_matrix": true
     },
     "diode_direction": "ROW2COL",
     "matrix_size": {
