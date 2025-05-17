@@ -16,7 +16,6 @@
 
 #pragma once
 
-#define RGB_MATRIX_ENABLE
 #define RGB_MATRIX_INDICATORS
 #define RGB_TRIGGER_ON_KEYDOWN
 

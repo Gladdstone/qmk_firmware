@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include QMK_KEYBOARD_H
 #include "quantum.h"
 
 // clang-format off
@@ -119,6 +120,7 @@ const ckled2001_led g_ckled2001_leds[RGB_MATRIX_LED_COUNT] = {
     {1, A_4,    B_4,    C_4}
 };
 
+// see quantum/rgb_matrix/rgb_matrix_types.h for struct definition
 led_config_t g_led_config = {
 	{
 		{  0,      1,      2,      3,      4,      5,      6,      7,      8,      9,      10,     11,     12,     NO_LED, 13,     14,     15 },
@@ -156,6 +158,7 @@ led_config_t g_led_config = {
  */
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = get_highest_layer(layer_state);
+    uprintf("layer: %u\n", layer);
 
     // if (layer == MAC_FN) {
     //     rgb_matrix_set_color_all(RGB_GREEN);
@@ -163,15 +166,69 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     //     rgb_matrix_set_color_all(RGB_BLUE);
     // }
 
-    // for (uint8_t i = led_min; i < led_max; ++i) {
-    //     if (g_led_config.key[i].row == 0) {  // F-row
-    //         rgb_matrix_set_color(i, RGB_RED);
-    //     } else {
-    //         rgb_matrix_set_color(i, RGB_GREEN);
-    //     }
-    // }
-
     rgb_matrix_set_color_all(RGB_WHITE);
+
+    for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+        for(uint8_t col = 0; col < MATRIX_COLS; ++col) {
+            uint8_t index = g_led_config.matrix_co[row][col];
+
+            if(index != NO_LED && rgb_matrix_get_mode() == RGB_MATRIX_SOLID_COLOR) {
+                keypos_t key = { .row = row, .col = col };
+                uint16_t keycode = keymap_key_to_keycode(layer, key);
+
+                if(keycode == KC_LEFT) {
+                    rgb_matrix_set_color(index, RGB_GREEN);
+                }
+
+                // debugging note:
+                // check to see if it isn't still resolving
+                // keymappings against the MAC_BASE layer
+                switch(keycode) {
+                    case KC_BRID:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case KC_F1:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case KC_F2:
+                        rgb_matrix_set_color(index, RGB_BLUE);
+                        break;
+                    case KC_F3:
+                        rgb_matrix_set_color(index, RGB_BLUE);
+                        break;
+                    case KC_F4:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case KC_F5:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
+                    case KC_F6:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
+                    case KC_F7:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
+                    case KC_F8:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
+                    case KC_UP:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case KC_DOWN:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case KC_LEFT:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case KC_RIGHT:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
     if (host_keyboard_led_state().caps_lock) {
         rgb_matrix_set_color_all(0x8b, 0x00, 0x00);  // RGB dark red --- capslock color
@@ -180,23 +237,4 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     return true;
 }
 
-/**
- * Called whenever a key is pressed or released
- */
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case KC_LSFT:
-            if(record -> event.pressed) {
-                rgb_matrix_set_color_all(0, 0, 255); // Flash blue when left shift is pressed
-            }
-            break;
-        case KC_1:
-            if(record -> event.pressed) {
-                rgb_matrix_set_color_all(0, 255, 0);
-            }
-        default:
-            break;
-    }
-    return true;
-}
 #endif

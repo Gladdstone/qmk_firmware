@@ -1,1 +1,5 @@
-# This file intentionally blank
+RGB_MATRIX_ENABLE = yes
+# RGB_MATRIX_CUSTOM_USER = yes
+RGB_MATRIX_INDICATORS = yes
+CONSOLE_ENABLE = yes
+COMMAND_ENABLE = yes
