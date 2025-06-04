@@ -87,7 +87,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_set_color_all(0, 255, 0);
             }
         default:
-            rgb_matrix_set_color_all(255, 0, 0);
+            /* rgb_matrix_set_color_all(255, 0, 0); */
             break;
     }
     return true;
@@ -99,6 +99,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     }
     return state;
 }
+
+/* void raw_hid_receive(uint8_t *data, uint8_t length) { */
+/*     // `data` is a pointer to the buffer containing the received HID report */
+/*     // `length` is the length of the report - always `RAW_EPSIZE` */
+/* } */
+
 /**
  * This function should only be run to reset EEPROM
  */

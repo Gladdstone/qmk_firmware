@@ -19,6 +19,9 @@
 
 // clang-format off
 #ifdef RGB_MATRIX_ENABLE
+
+#define AZEM_ORANGE 0xf7, 0x7a, 0x2a
+
 const ckled2001_led g_ckled2001_leds[RGB_MATRIX_LED_COUNT] = {
 /* Refer to IS31 manual for these locations
  *   driver
@@ -157,8 +160,8 @@ led_config_t g_led_config = {
  * @return bool
  */
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    uint8_t layer = get_highest_layer(layer_state);
-    uprintf("layer: %u\n", layer);
+    /* uint8_t layer = get_highest_layer(layer_state); */
+    /* uprintf("layer: %u\n", layer); */
 
     // if (layer == MAC_FN) {
     //     rgb_matrix_set_color_all(RGB_GREEN);
@@ -174,7 +177,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
             if(index != NO_LED && rgb_matrix_get_mode() == RGB_MATRIX_SOLID_COLOR) {
                 keypos_t key = { .row = row, .col = col };
-                uint16_t keycode = keymap_key_to_keycode(layer, key);
+                uint16_t keycode = keymap_key_to_keycode(layer_state, key);
 
                 if(keycode == KC_LEFT) {
                     rgb_matrix_set_color(index, RGB_GREEN);
@@ -184,44 +187,76 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 // check to see if it isn't still resolving
                 // keymappings against the MAC_BASE layer
                 switch(keycode) {
-                    case KC_BRID:
-                        rgb_matrix_set_color(index, RGB_GREEN);
-                        break;
+                    /* case KC_BRID: */
+                    /*     rgb_matrix_set_color(index, RGB_GREEN); */
+                    /*     break; */
                     case KC_F1:
                         rgb_matrix_set_color(index, RGB_GREEN);
                         break;
+                    case KC_BRIU:
+                        rgb_matrix_set_color(index, RGB_BLUE);
+                        break;
                     case KC_F2:
+                        rgb_matrix_set_color(index, RGB_BLUE);
+                        break;
+                    case KC_MCTL:
                         rgb_matrix_set_color(index, RGB_BLUE);
                         break;
                     case KC_F3:
                         rgb_matrix_set_color(index, RGB_BLUE);
                         break;
+                    case KC_LPAD:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
                     case KC_F4:
                         rgb_matrix_set_color(index, RGB_GREEN);
                         break;
+                    case RGB_VAD:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
                     case KC_F5:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
+                    case RGB_VAI:
                         rgb_matrix_set_color(index, RGB_RED);
                         break;
                     case KC_F6:
                         rgb_matrix_set_color(index, RGB_RED);
                         break;
+                    case KC_MPRV:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
                     case KC_F7:
+                        rgb_matrix_set_color(index, RGB_RED);
+                        break;
+                    case KC_MPLY:
                         rgb_matrix_set_color(index, RGB_RED);
                         break;
                     case KC_F8:
                         rgb_matrix_set_color(index, RGB_RED);
-                        break;
                     case KC_UP:
-                        rgb_matrix_set_color(index, RGB_GREEN);
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
                         break;
                     case KC_DOWN:
-                        rgb_matrix_set_color(index, RGB_GREEN);
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
                         break;
                     case KC_LEFT:
-                        rgb_matrix_set_color(index, RGB_GREEN);
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
                         break;
                     case KC_RIGHT:
-                        rgb_matrix_set_color(index, RGB_GREEN);
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
+                        break;
+                    case KC_W:
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
+                        break;
+                    case KC_A:
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
+                        break;
+                    case KC_S:
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
+                        break;
+                    case KC_D:
+                        rgb_matrix_set_color(index, AZEM_ORANGE);
                         break;
                     default:
                         break;
